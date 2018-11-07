@@ -38,7 +38,7 @@ export WORKER_HOSTNAMES=("icpworker1")
 
 #PROXY
 export PROXY_IPS=("172.17.16.12")
-export WORKER_HOSTNAMES=("icpproxy1")
+export PROXY_HOSTNAMES=("icpproxy1")
 
 
 if [[ "${#WORKER_IPS[@]}" != "${#WORKER_HOSTNAMES[@]}" ]]; then

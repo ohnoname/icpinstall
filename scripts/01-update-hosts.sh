@@ -29,7 +29,6 @@ for ((i=0; i < $NUM_PROXYS; i++)); do
   echo "${PROXY_IPS[i]} ${PROXY_HOSTNAMES[i]}" | sudo tee -a /etc/hosts
 done
 
-
 echo "" | sudo tee -a /etc/hosts
 
 sudo cp /etc/hosts ~/worker-hosts

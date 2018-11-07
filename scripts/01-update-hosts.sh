@@ -18,14 +18,18 @@ echo "ff02::3 ip6-allhosts" | sudo tee -a /etc/hosts
 echo "" | sudo tee -a /etc/hosts
 
 echo "$MASTER_IP icpmaster" | sudo tee -a /etc/hosts
-# Loop through the array
-for ((i=0; i < $NUM_PROXYS; i++)); do
-  echo "${PROXY_IPS[i]} ${PROXY_HOSTNAMES[i]}" | sudo tee -a /etc/hosts
-done
+
 # Loop through the array
 for ((i=0; i < $NUM_WORKERS; i++)); do
   echo "${WORKER_IPS[i]} ${WORKER_HOSTNAMES[i]}" | sudo tee -a /etc/hosts
 done
+
+# Loop through the array
+for ((i=0; i < $NUM_PROXYS; i++)); do
+  echo "${PROXY_IPS[i]} ${PROXY_HOSTNAMES[i]}" | sudo tee -a /etc/hosts
+done
+
+
 echo "" | sudo tee -a /etc/hosts
 
 sudo cp /etc/hosts ~/worker-hosts

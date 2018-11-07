@@ -37,7 +37,8 @@ export WORKER_IPS=("172.17.16.11")
 export WORKER_HOSTNAMES=("icpworker1")
 
 #PROXY
-export PROXY_IP=172.17.16.12
+export PROXY_IPS=("172.17.16.12")
+export WORKER_HOSTNAMES=("icpproxy1")
 
 
 if [[ "${#WORKER_IPS[@]}" != "${#WORKER_HOSTNAMES[@]}" ]]; then
@@ -45,7 +46,13 @@ if [[ "${#WORKER_IPS[@]}" != "${#WORKER_HOSTNAMES[@]}" ]]; then
   return 1
 fi
 
+if [[ "${#PROXY_IPS[@]}" != "${#PROXY_HOSTNAMES[@]}" ]]; then
+  echo "ERROR: Ensure that the arrays PROXY_IPS and PROXY_HOSTNAMES are of the same length"
+  return 1
+fi
+
 export NUM_WORKERS=${#WORKER_IPS[@]}
+export NUM_PROXYS=${#PROXY_IPS[@]}
 
 export ARCH="$(uname -m)"
 if [ "${ARCH}" != "x86_64" ]; then

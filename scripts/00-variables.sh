@@ -29,15 +29,15 @@ export SSH_KEY=/home/VS.LAN/bnieuwenburg
 export SSH_USER=bnieuwenburg
 
 #export PUBLIC_IP=x.x.x.x
-export MASTER_IP=mastertest.vs.ccloud.vs.lan
+export MASTER_IP=172.17.16.10
 
 
 #WORKER_IPS[0] should be the same worker at WORKER_HOSTNAMES[0]
-export WORKER_IPS=("workertest.vs.ccloud.vs.lan")
+export WORKER_IPS=("172.17.16.11")
 export WORKER_HOSTNAMES=("icpworker1")
 
 #PROXY
-export PROXY_IP=proxytest.vs.ccloud.vs.lan
+export PROXY_IP=172.17.16.12
 
 
 if [[ "${#WORKER_IPS[@]}" != "${#WORKER_HOSTNAMES[@]}" ]]; then

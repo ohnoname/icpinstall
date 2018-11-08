@@ -17,7 +17,7 @@ echo "ff02::2 ip6-allrouters" | sudo tee -a /etc/hosts
 echo "ff02::3 ip6-allhosts" | sudo tee -a /etc/hosts
 echo "" | sudo tee -a /etc/hosts
 
-echo "$MASTER_IP icpmaster" | sudo tee -a /etc/hosts
+echo "172.17.16.10  icpmaster" | sudo tee -a /etc/hosts
 
 # Loop through the array
 for ((i=0; i < $NUM_WORKERS; i++)); do

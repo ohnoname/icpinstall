@@ -14,6 +14,23 @@ cat ~/.ssh/master.id_rsa.pub | sudo tee /root/.ssh/authorized_keys | tee -a ~/.s
 echo IdentityFile ~/.ssh/master.id_rsa | sudo tee -a /root/.ssh/config | tee -a ~/.ssh/config
 
 # Loop through the array
+for ((i=0; i < $NUM_MASTERS; i++)); do
+  # Prevent SSH identity prompts
+  # If hostname exists in known hosts remove it
+  ssh-keygen -R ${MASTER_HOSTNAMES[i]}
+  # Add hostname to known hosts
+  ssh-keyscan -H ${MASTER_HOSTNAMES[i]} | tee -a ~/.ssh/known_hosts
+  
+  # Allow root and user login
+  ssh -i ${SSH_KEY} ${SSH_USER}@${MASTER_HOSTNAMES[i]} sudo mkdir -p /root/.ssh
+  scp -i ${SSH_KEY} ~/.ssh/master.id_rsa.pub ${SSH_USER}@${MASTER_HOSTNAMES[i]}:~/.ssh/master.id_rsa.pub
+
+  ssh -i ${SSH_KEY} ${SSH_USER}@${MASTER_HOSTNAMES[i]} 'cat ~/.ssh/master.id_rsa.pub | sudo tee /root/.ssh/authorized_keys | tee -a ~/.ssh/authorized_keys; echo "PermitRootLogin yes" | sudo tee -a /etc/ssh/sshd_config'
+  ssh -i ${SSH_KEY} ${SSH_USER}@${MASTER_HOSTNAMES[i]} sudo service sshd restart
+
+done
+
+# Loop through the array
 for ((i=0; i < $NUM_WORKERS; i++)); do
   # Prevent SSH identity prompts
   # If hostname exists in known hosts remove it
@@ -27,5 +44,22 @@ for ((i=0; i < $NUM_WORKERS; i++)); do
 
   ssh -i ${SSH_KEY} ${SSH_USER}@${WORKER_HOSTNAMES[i]} 'cat ~/.ssh/master.id_rsa.pub | sudo tee /root/.ssh/authorized_keys | tee -a ~/.ssh/authorized_keys; echo "PermitRootLogin yes" | sudo tee -a /etc/ssh/sshd_config'
   ssh -i ${SSH_KEY} ${SSH_USER}@${WORKER_HOSTNAMES[i]} sudo service sshd restart
+
+done
+
+# Loop through the array
+for ((i=0; i < $NUM_PROXYS; i++)); do
+  # Prevent SSH identity prompts
+  # If hostname exists in known hosts remove it
+  ssh-keygen -R ${PROXY_HOSTNAMES[i]}
+  # Add hostname to known hosts
+  ssh-keyscan -H ${PROXY_HOSTNAMES[i]} | tee -a ~/.ssh/known_hosts
+  
+  # Allow root and user login
+  ssh -i ${SSH_KEY} ${SSH_USER}@${PROXY_HOSTNAMES[i]} sudo mkdir -p /root/.ssh
+  scp -i ${SSH_KEY} ~/.ssh/master.id_rsa.pub ${SSH_USER}@${PROXY_HOSTNAMES[i]}:~/.ssh/master.id_rsa.pub
+
+  ssh -i ${SSH_KEY} ${SSH_USER}@${PROXY_HOSTNAMES[i]} 'cat ~/.ssh/master.id_rsa.pub | sudo tee /root/.ssh/authorized_keys | tee -a ~/.ssh/authorized_keys; echo "PermitRootLogin yes" | sudo tee -a /etc/ssh/sshd_config'
+  ssh -i ${SSH_KEY} ${SSH_USER}@${PROXY_HOSTNAMES[i]} sudo service sshd restart
 
 done

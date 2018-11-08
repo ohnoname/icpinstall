@@ -20,6 +20,11 @@ echo "" | sudo tee -a /etc/hosts
 echo "$MASTER_IP icpmaster" | sudo tee -a /etc/hosts
 
 # Loop through the array
+for ((i=0; i < $NUM_MASTERS; i++)); do
+  echo "${MASTER_IPS[i]} ${MASTER_HOSTNAMES[i]}" | sudo tee -a /etc/hosts
+done
+
+# Loop through the array
 for ((i=0; i < $NUM_WORKERS; i++)); do
   echo "${WORKER_IPS[i]} ${WORKER_HOSTNAMES[i]}" | sudo tee -a /etc/hosts
 done
@@ -31,14 +36,30 @@ done
 
 echo "" | sudo tee -a /etc/hosts
 
+sudo cp /etc/hosts ~/master-hosts
+sudo chown $USER ~/master-hosts
+
 sudo cp /etc/hosts ~/worker-hosts
 sudo chown $USER ~/worker-hosts
 
 sudo cp /etc/hosts ~/proxy-hosts
 sudo chown $USER ~/proxy-hosts
 
+for ((i=0; i < $NUM_MASTERS; i++)); do
+  # Remove old instance of host
+  ssh-keygen -R ${MASTER_IPS[i]}
+  ssh-keygen -R ${MASTER_HOSTNAMES[i]}
 
+  # Do not ask to verify fingerprint of server on ssh
+  ssh-keyscan -H ${MASTER_IPS[i]} >> ~/.ssh/known_hosts
+  ssh-keyscan -H ${MASTER_HOSTNAMES[i]} >> ~/.ssh/known_hosts
 
+  # Copy over file
+  sudo scp -i ${SSH_KEY} ~/master-hosts  ${SSH_USER}@${MASTER_HOSTNAMES[i]}:~/master-hosts
+
+  # Replace MASTER hosts with file
+  ssh -i ${SSH_KEY} ${SSH_USER}@${MASTER_HOSTNAMES[i]} 'sudo cp /etc/hosts /etc/hosts.bak; sudo mv ~/master-hosts /etc/hosts'
+done
 
 for ((i=0; i < $NUM_WORKERS; i++)); do
   # Remove old instance of host

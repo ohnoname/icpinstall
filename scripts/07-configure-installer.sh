@@ -6,6 +6,9 @@ source 00-variables.sh
 # Move SSH key
 sudo cp ~/.ssh/master.id_rsa /opt/ibm-cloud-private-3.1.0/cluster/ssh_key
 
+#Empty file first
+sudo echo -n "" > /opt/ibm-cloud-private-3.1.0/cluster/hosts
+
 # Configure hosts
 echo "[master]" | sudo tee -a /opt/ibm-cloud-private-3.1.0/cluster/hosts
 for ((i=0; i < $NUM_MASTERS; i++)); do

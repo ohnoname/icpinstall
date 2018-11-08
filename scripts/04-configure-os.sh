@@ -11,6 +11,7 @@ sudo sysctl -w vm.max_map_count=262144
 echo vm.max_map_count=262144 | sudo tee -a /etc/sysctl.conf
 
 # Sync time
+sudo yum install -y ntpdate
 sudo ntpdate -s time.nist.gov
 
 # Start docker
@@ -25,6 +26,7 @@ for ((i=0; i < $NUM_MASTERS; i++)); do
   ssh ${SSH_USER}@${MASTER_HOSTNAMES[i]} "echo vm.max_map_count=262144 | sudo tee -a /etc/sysctl.conf"
 
   # Sync time
+  ssh ${SSH_USER}@${MASTER_HOSTNAMES[i]} sudo yum install -y ntpdate
   ssh ${SSH_USER}@${MASTER_HOSTNAMES[i]} sudo ntpdate -s time.nist.gov
 
   # Start docker
@@ -41,6 +43,7 @@ for ((i=0; i < $NUM_WORKERS; i++)); do
   ssh ${SSH_USER}@${WORKER_HOSTNAMES[i]} "echo vm.max_map_count=262144 | sudo tee -a /etc/sysctl.conf"
 
   # Sync time
+  ssh ${SSH_USER}@${WORKER_HOSTNAMES[i]} sudo yum install -y ntpdate
   ssh ${SSH_USER}@${WORKER_HOSTNAMES[i]} sudo ntpdate -s time.nist.gov
 
   # Start docker
@@ -57,6 +60,7 @@ for ((i=0; i < $NUM_PROXYS; i++)); do
   ssh ${SSH_USER}@${PROXY_HOSTNAMES[i]} "echo vm.max_map_count=262144 | sudo tee -a /etc/sysctl.conf"
 
   # Sync time
+  ssh ${SSH_USER}@${PROXY_HOSTNAMES[i]} sudo yum install -y ntpdate
   ssh ${SSH_USER}@${PROXY_HOSTNAMES[i]} sudo ntpdate -s time.nist.gov
 
   # Start docker

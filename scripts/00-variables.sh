@@ -9,9 +9,9 @@
 # ----------------------------------------------------------------------------------------------------\\
 # System Requirements:
 #   Tested against RHEL 7.4 (Conclusion Cloud - KVM-RHE7.4-Srv-x64)
-#   Master Node - 4 CPUs 2 cores, 16 GB RAM, 200 GB disk
+#   Master Node - 4 CPUs 2 cores, 16 GB RAM, 250 GB disk
 #   Worker Node - 2 CPUs 1 core, 8 GB RAM, 150 GB disk
-#	Proxy  Node - 2 CPUs 1 core, 8 GB RAM, 50 GB disk
+#	Proxy  Node - 2 CPUs 1 core, 8 GB RAM, 150 GB disk
 #   Requires sudo access
 # ----------------------------------------------------------------------------------------------------\\
 # Docs:
@@ -24,7 +24,6 @@
 #    - https://www.ibm.com/developerworks/community/wikis/home?lang=en#!/wiki/W1559b1be149d_43b0_881e_9783f38faaff/page/Connect
 # ----------------------------------------------------------------------------------------------------\\
 
-#ToDo add PROXY and change version of ICP
 export SSH_KEY=/home/VS.LAN/bnieuwenburg
 export SSH_USER=bnieuwenburg
 
@@ -64,10 +63,3 @@ export ARCH="$(uname -m)"
 if [ "${ARCH}" != "x86_64" ]; then
   export INCEPTION_TAG="-${ARCH}"
 fi
-
-#echo ${WORKER_HOSTNAMES}
-#export ARRAY_IDX=${!WORKER_IPS[*]}
-#for index in $ARRAY_IDX;
-#do
-#    echo ${WORKER_IPS[$index]}
-#done

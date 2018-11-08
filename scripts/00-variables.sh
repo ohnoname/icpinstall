@@ -29,8 +29,8 @@ export SSH_KEY=/home/VS.LAN/bnieuwenburg
 export SSH_USER=bnieuwenburg
 
 #export PUBLIC_IP=x.x.x.x
-export MASTER_IP=172.17.16.10
-
+export MASTER_IPS=("172.17.16.10")
+export MASTER_HOSTNAMES=("icpmaster1")
 
 #WORKER_IPS[0] should be the same worker at WORKER_HOSTNAMES[0]
 export WORKER_IPS=("172.17.16.11")
@@ -40,6 +40,10 @@ export WORKER_HOSTNAMES=("icpworker1")
 export PROXY_IPS=("172.17.16.12")
 export PROXY_HOSTNAMES=("icpproxy1")
 
+if [[ "${#MASTER_IPS[@]}" != "${#MASTER_HOSTNAMES[@]}" ]]; then
+  echo "ERROR: Ensure that the arrays MASTER_IPS and MASTER_HOSTNAMES are of the same length"
+  return 1
+fi
 
 if [[ "${#WORKER_IPS[@]}" != "${#WORKER_HOSTNAMES[@]}" ]]; then
   echo "ERROR: Ensure that the arrays WORKER_IPS and WORKER_HOSTNAMES are of the same length"

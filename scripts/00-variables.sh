@@ -55,8 +55,10 @@ if [[ "${#PROXY_IPS[@]}" != "${#PROXY_HOSTNAMES[@]}" ]]; then
   return 1
 fi
 
+export NUM_MASTERS=${#WORKER_IPS[@]}
 export NUM_WORKERS=${#WORKER_IPS[@]}
 export NUM_PROXYS=${#PROXY_IPS[@]}
+
 
 export ARCH="$(uname -m)"
 if [ "${ARCH}" != "x86_64" ]; then

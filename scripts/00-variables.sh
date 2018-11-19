@@ -24,8 +24,8 @@
 #    - https://www.ibm.com/developerworks/community/wikis/home?lang=en#!/wiki/W1559b1be149d_43b0_881e_9783f38faaff/page/Connect
 # ----------------------------------------------------------------------------------------------------\\
 
-export SSH_KEY=/home/VS.LAN/bnieuwenburg
-export SSH_USER=bnieuwenburg
+export SSH_KEY=~/.ssh/id_rsa
+export SSH_USER=aommeren
 
 #export PUBLIC_IP=x.x.x.x
 export MASTER_IPS=("172.17.16.10")

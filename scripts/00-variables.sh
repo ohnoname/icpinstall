@@ -25,7 +25,7 @@
 # ----------------------------------------------------------------------------------------------------\\
 
 export SSH_KEY=~/.ssh/id_rsa
-export SSH_USER=aommeren
+export SSH_USER=bnieuwenburg
 
 #export PUBLIC_IP=x.x.x.x
 export MASTER_IPS=("172.17.16.10")

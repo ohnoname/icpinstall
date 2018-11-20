@@ -7,7 +7,7 @@ set -e
 cd /opt/ibm-cloud-private-3.1.0
 
 # Get kubectl
-#sudo docker run -e LICENSE=accept --net=host -v /usr/local/bin:/data ibmcom/kubernetes${INCEPTION_TAG}:v1.7.3 cp /kubectl /data
+sudo docker run -e LICENSE=accept --net=host -v /usr/local/bin:/data ibmcom/kubernetes${INCEPTION_TAG}:v1.11.1 cp /kubectl /data
 
 # Make config directory
 mkdir -p ~/.kube
